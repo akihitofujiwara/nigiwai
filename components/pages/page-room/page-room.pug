@@ -1,9 +1,4 @@
 link(rel="import" href="../../../bower_components/polymer/polymer.html")
-link(rel="import" href="../../../bower_components/app-layout/app-drawer-layout/app-drawer-layout.html")
-link(rel="import" href="../../../bower_components/app-layout/app-drawer/app-drawer.html")
-link(rel="import" href="../../../bower_components/app-layout/app-header-layout/app-header-layout.html")
-link(rel="import" href="../../../bower_components/app-layout/app-header/app-header.html")
-link(rel="import" href="../../../bower_components/app-layout/app-toolbar/app-toolbar.html")
 link(rel="import" href="../../../bower_components/paper-button/paper-button.html")
 link(rel="import" href="../../../bower_components/iron-icons/iron-icons.html")
 link(rel="import" href="../../../bower_components/iron-icons/image-icons.html")
@@ -17,87 +12,64 @@ link(rel="import" href="../../../bower_components/paper-drawer-panel/paper-drawe
 link(rel="import" href="../../../bower_components/paper-card/paper-card.html")
 link(rel="import" href="../../../bower_components/paper-fab/paper-fab.html")
 link(rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout-classes.html")
-link(rel="import" href="../../hoge-elm/hoge-elm.html")
+link(rel="import" href="../../../bower_components/polymerfire/firebase-document.html")
+link(rel="import" href="../../../bower_components/polymerfire/firebase-auth.html")
+link(rel="import" href="../../components/agreeable-board/agreeable-board.html")
+link(rel="import" href="../../components/nigi-yakashi/nigi-yakashi.html")
+link(rel="import" href="../../components/reaction-gauge/reaction-gauge.html")
 
 dom-module#page-room
   template
-    style(include="iron-flex iron-flex-alignment")
+    style(include="iron-flex iron-flex-factors iron-positioning")
     style(is="custom-style").
-      .card-content {
-        height: 100%;
-        box-sizing: border-box;
+      paper-card {
+        margin: 1rem;
       }
-      .main {
-        padding: 1rem;
-        height: 100%;
+      .user .image {
+        border-radius: 100%;
+        width: 40px;
+        height: 40px;
+        overflow: hidden;
       }
-      .main > paper-card {
-        height: 60vh
+      .user .image img{
+        width: 100%;
       }
-      .comments paper-card {
-        width: 500px
-      }
-      .actions paper-card {
-        width: 500px
-      }
-      section {
-        padding: 1rem
-      }
-      paper-fab {
-        position: fixed;
-        bottom: 2rem;
-        right: 2rem;
-        --paper-fab-background: var(--accent-color)
-      }
-    paper-drawer-panel(responsive-width="960px")
-      div(drawer)
-        section
-          h2.title Nigiwai
-        section
-          .user
-            .name haraaki
-      paper-header-panel(main)
-        paper-toolbar
-          paper-icon-button(icon="menu" paper-drawer-toggle)
-          .title.flex [[room.name]]
-          paper-icon-button(icon="image:edit" on-tap="openDialog")
-        .main.block.horizontal.layout.center-justified.center
-          paper-card
-            .card-content.layout.vertical
-              paper-card.flex
-                .card-content
-                  template(is="dom-repeat" items="[[comments]]")
-                    .comment [[item.value]]
+    template(is="dom-if" if="[[active]]" restamp)
+      app-route(pattern="/:id" route="[[route]]" data="{{routeData}}")
+      firebase-auth#firebaseAuth(user="{{user}}" provider="google")
+      firebase-document(path="/rooms/[[routeData.id]]" data="{{room}}")
+      paper-drawer-panel(responsive-width="960px")
+        div(drawer)
+          .layout.vertical
+            h2.title
+              a(href="#/") Nigiwai
+            // コンポーネント化したい
+            h3.user.layout.horizontal.center
+              .image: img(src$="[[user.photoURL]]")
+              .name [[user.displayName]]
+        paper-header-panel(main)
+          paper-toolbar
+            paper-icon-button(icon="menu" paper-drawer-toggle)
+            .title.flex [[room.name]]
+            paper-icon-button(icon="image:edit" on-tap="openDialog")
+          .horizontal.layout.around-justified
+            .vertical.layout.flex
               paper-card
                 .card-content
-                  hoge-elm
-              paper-card.flex(elevation="0")
-                .card-content.horizontal.layout.around-justified.center
-                    span.clap
-                      paper-button#clap(on-tap="clap" raised) パチパチ
-                      paper-badge(for="clap" label="[[claps.length]]")
-                    span.like
-                      paper-button#like(on-tap="like" raised) いいね！
-                      paper-badge(for="like" label="[[likes.length]]")
-                    span.interesting
-                      paper-button#interesting(on-tap="interesting" raised) 面白いっ
-                      paper-badge(for="interesting" label="[[interestings.length]]")
-          template(is="dom-repeat" items="[[claps]]")
-            audio(src="/files/sounds/clap.mp3" autoplay="[[item.autoplay]]")
-          template(is="dom-repeat" items="[[likes]]")
-            audio(src="/files/sounds/like.mp3" autoplay="[[item.autoplay]]")
-          template(is="dom-repeat" items="[[interestings]]")
-            audio(src="/files/sounds/interesting.mp3" autoplay="[[item.autoplay]]")
-    paper-fab(icon="add" on-tap="openDialogForNewRoom")
-    paper-dialog#dialog(modal on-iron-overlay-closed="onEditorClosed" on-iron-overlay-opened="onEditorOpened")
-      header
-        h2(hidden$="[[!isNewEdited]]") ルーム作成
-        h2(hidden$="[[isNewEdited]]") ルーム編集
-      .main
-        paper-input(hidden$="[[!isNewEdited]]" label="ルーム名" value="{{newRoom.name}}")
-        paper-input(hidden$="[[isNewEdited]]" label="ルーム名" value="{{room.name}}")
-      footer
-        paper-button(raised dialog-dismiss) Cancel
-        paper-button(raised dialog-confirm autofocus) Save
+                  agreeable-board(room-id="[[routeData.id]]")
+              paper-card
+                .card-content
+                  nigi-yakashi(room-id="[[routeData.id]]")
+            paper-card
+              .card-content
+                reaction-gauge(room-id="[[routeData.id]]")
+      paper-dialog#dialog(modal on-iron-overlay-closed="onEditorClosed" on-iron-overlay-opened="onEditorOpened")
+        header
+          h2 ルーム編集
+        .main
+          paper-input(label="ルーム名" value="{{room.name}}")
+        footer
+          paper-button(raised dialog-dismiss) Cancel
+          paper-button(raised dialog-confirm autofocus) Save
   script(src="./page-room.js")
 

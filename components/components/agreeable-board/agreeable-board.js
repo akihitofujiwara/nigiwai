@@ -6,41 +6,46 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var PageRoom = function () {
-  function PageRoom() {
-    _classCallCheck(this, PageRoom);
+var AgreeableBoard = function () {
+  function AgreeableBoard() {
+    _classCallCheck(this, AgreeableBoard);
   }
 
-  _createClass(PageRoom, [{
-    key: "openDialog",
-    value: function openDialog() {
-      this.$.dialog.open();
-    }
-  }, {
-    key: "onEditorOpened",
-    value: function onEditorOpened() {
-      this.set("_room", _extends({}, this.room));
-    }
-  }, {
-    key: "onEditorClosed",
-    value: function onEditorClosed(_ref) {
-      var confirmed = _ref.detail.confirmed;
+  _createClass(AgreeableBoard, [{
+    key: "submit",
+    value: function submit(event) {
+      var newComment = this.newComment,
+          user = this.user,
+          firebase = this.$.firebase;
 
-      if (!confirmed) this.set("room", this._room);
+      event.preventDefault();
+      firebase.ref.push(_extends({}, newComment, { createdBy: user.uid }));
+      this.clear();
+    }
+  }, {
+    key: "clear",
+    value: function clear() {
+      this.set("newComment", {});
     }
   }, {
     key: "is",
     get: function get() {
-      return "page-room";
+      return "agreeable-board";
     }
   }, {
     key: "properties",
     get: function get() {
-      return {};
+      return {
+        newComment: {
+          value: {
+            body: ""
+          }
+        }
+      };
     }
   }]);
 
-  return PageRoom;
+  return AgreeableBoard;
 }();
 
-Polymer(PageRoom.prototype);
+Polymer(AgreeableBoard.prototype);

@@ -1,0 +1,84 @@
+link(rel="import" href="../../../bower_components/polymer/polymer.html")
+link(rel="import" href="../../../bower_components/paper-drawer-panel/paper-drawer-panel.html")
+link(rel="import" href="../../../bower_components/paper-header-panel/paper-header-panel.html")
+link(rel="import" href="../../../bower_components/paper-toolbar/paper-toolbar.html")
+link(rel="import" href="../../../bower_components/paper-card/paper-card.html")
+link(rel="import" href="../../../bower_components/polymerfire/firebase-query.html")
+link(rel="import" href="../../../bower_components/polymerfire/firebase-auth.html")
+link(rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout-classes.html")
+link(rel="import" href="../../../bower_components/iron-list/iron-list.html")
+link(rel="import" href="../../../bower_components/iron-icon/iron-icon.html")
+link(rel="import" href="../../../bower_components/paper-fab/paper-fab.html")
+
+dom-module#page-rooms
+  template
+    style(include="iron-flex iron-flex-factors iron-positioning")
+    style(is="custom-style").
+      iron-list {
+        margin-top: 2rem;
+      }
+      .room {
+        width: 200pt;
+        height: 200pt;
+      }
+      .room paper-card {
+        margin: 0.5rem;
+      }
+      .room h4 {
+        font-size: 24pt;
+        margin: 0;
+      }
+      paper-fab {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        --paper-fab-background: var(--accent-color)
+      }
+      a {
+        text-decoration: none;
+      }
+      .user .image {
+        border-radius: 100%;
+        width: 40px;
+        height: 40px;
+        overflow: hidden;
+      }
+      .user .image img{
+        width: 100%;
+      }
+    template(is="dom-if" if="[[active]]" restamp)
+      firebase-auth#firebaseAuth(user="{{user}}" provider="google")
+      firebase-query#firebaseRooms(path="/rooms" data="{{rooms}}")
+      paper-drawer-panel(responsive-width="960px")
+        div(drawer)
+          .layout.vertical
+            h2.title
+              a(href="#/") Nigiwai
+            // コンポーネント化したい
+            h3.user.layout.horizontal.center
+              .image: img(src$="[[user.photoURL]]")
+              .name [[user.displayName]]
+        paper-header-panel(main)
+          paper-toolbar
+            paper-icon-button(icon="menu" paper-drawer-toggle)
+            .title.flex ルーム一覧
+          iron-list.fit(items="[[rooms]]" grid)
+            template
+              .room
+                paper-card.fit
+                  .card-content.fit.layout.vertical.center.center-justified
+                    h4 [[item.name]]
+                a.fit(href$="#/room/[[item.$key]]")
+      paper-dialog#dialog(modal on-iron-overlay-closed="onEditorClosed" on-iron-overlay-opened="onEditorOpened")
+        header
+          h2 ルーム作成
+        .main
+          paper-input(label="ルーム名" value="{{room.name}}")
+        footer
+          paper-button(raised dialog-dismiss) Cancel
+          paper-button(raised dialog-confirm autofocus) Save
+      paper-fab(icon="add" on-tap="openDialog")
+  script(src="./page-rooms.js")
+
+
+

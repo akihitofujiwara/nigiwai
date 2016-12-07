@@ -1,0 +1,32 @@
+link(rel="import" href="../../../bower_components/polymer/polymer.html")
+link(rel="import" href="../../../bower_components/paper-button/paper-button.html")
+link(rel="import" href="../../../bower_components/paper-icon-button/paper-icon-button.html")
+link(rel="import" href="../../../bower_components/paper-badge/paper-badge.html")
+link(rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout-classes.html")
+
+dom-module#nigi-yakashi
+  template
+    style(include="iron-flex iron-flex-factors iron-positioning")
+    style(is="custom-style").
+      :host {
+        display: block;
+        min-width: 400px;
+        min-height: 200px;
+      }
+    firebase-auth#firebaseAuth(user="{{user}}" provider="google")
+    firebase-query#firebaseReactions(path="/rooms/[[roomId]]/reactions" data="{{reactions}}")
+    firebase-query(path="/users" data="{{users}}")
+    .hoge
+      span.clap
+        paper-button#clap(on-tap="clap" raised) パチパチ
+        paper-badge(for="clap" label="[[claps.length]]")
+      span.like
+        paper-button#like(on-tap="like" raised) いいね！
+        paper-badge(for="like" label="0")
+      span.interesting
+        paper-button#interesting(on-tap="interesting" raised) 面白いっ
+        paper-badge(for="interesting" label="0")
+      template(is="dom-repeat" items="[[claps]]")
+        audio(src="/files/sounds/clap.mp3" autoplay="[[item.autoplay]]")
+  script(src="./nigi-yakashi.js")
+
