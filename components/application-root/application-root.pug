@@ -37,8 +37,8 @@ dom-module#application-root
       app-route(name="room" pattern="/room/:id" route="[[route]]" data="{{routeData}}")
     .data
       firebase-app(auth-domain="nigiwai-27cf5.firebaseapp.com" database-url="https://nigiwai-27cf5.firebaseio.com" api-key="AIzaSyAGRVwLz3GTrNTx7uNC5YBV-ynxS4qeYKs")
-      firebase-auth#firebaseAuth(user="{{user}}" provider="google" signed-in="{{signedIn}}")
-      firebase-query#firebaseUsers(path="/users" data="{{users}}")
+      firebase-auth#firebaseAuth(user="{{authUser}}" provider="google" signed-in="{{signedIn}}")
+      firebase-document(path="/users/[[authUser.uid]]" data="{{user}}")
     neon-animated-pages.fit(selected="[[activeRouteName]]" attr-for-selected="name" entry-animation="fade-in-animation" exit-animation="fade-out-animation")
       page-root(name="root" active="[[equals(activeRouteName, 'root')]]")
       page-rooms(name="rooms" active="[[equals(activeRouteName, 'rooms')]]")
