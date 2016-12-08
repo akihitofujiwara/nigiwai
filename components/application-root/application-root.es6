@@ -6,6 +6,7 @@ class ApplicationRoot {
   }
   get observers() {
     return [
+      "setActiveRouteName(route)",
       "registerUser(user, users, users.length)"
     ]
   }
@@ -14,6 +15,12 @@ class ApplicationRoot {
   }
   signIn() {
     if (!this.signedIn) this.$.firebaseAuth.signInWithPopup()
+  }
+  setActiveRouteName(route) {
+    this.set(
+      "activeRouteName",
+      Polymer.dom(this.root).querySelectorAll("app-route").find(({active})=> active).getAttribute("name")
+    )
   }
   redirectPageRoot() {
     this.set("route.path", "/")

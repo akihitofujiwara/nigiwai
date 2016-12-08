@@ -35,9 +35,8 @@ dom-module#page-room
         width: 100%;
       }
     template(is="dom-if" if="[[active]]" restamp)
-      app-route(pattern="/:id" route="[[route]]" data="{{routeData}}")
       firebase-auth#firebaseAuth(user="{{user}}" provider="google")
-      firebase-document(path="/rooms/[[routeData.id]]" data="{{room}}")
+      firebase-document(path="/rooms/[[roomId]]" data="{{room}}")
       paper-drawer-panel(responsive-width="960px")
         div(drawer)
           .layout.vertical
@@ -56,13 +55,13 @@ dom-module#page-room
             .vertical.layout.flex
               paper-card
                 .card-content
-                  agreeable-board(room-id="[[routeData.id]]")
+                  agreeable-board(room-id="[[roomId]]")
               paper-card
                 .card-content
-                  nigi-yakashi(room-id="[[routeData.id]]")
+                  nigi-yakashi(room-id="[[roomId]]")
             paper-card
               .card-content
-                reaction-gauge(room-id="[[routeData.id]]")
+                reaction-gauge(room-id="[[roomId]]")
       paper-dialog#dialog(modal on-iron-overlay-closed="onEditorClosed" on-iron-overlay-opened="onEditorOpened")
         header
           h2 ルーム編集
