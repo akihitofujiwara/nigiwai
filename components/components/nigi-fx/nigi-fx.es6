@@ -1,26 +1,41 @@
+const VL = {
+  slerp: function(v1, v2, t){
+    return {
+      x: v1.x * (1 - t) + v2.x * t,
+      y: v1.y * (1 - t) + v2.y * t,
+    };
+  },
+  add: function(v1, v2) {
+    return {x: v1.x + v2.x, y: v1.y + v2.y};
+  },
+  scale: function(v, s) {
+    return {x: v.x * s, y: v.y * s};
+  }
+}
 Polymer({
   is: "nigi-fx",
   attached: function(){
     this.initFx();
   },
-  spawn: function(data){
-    console.log("spawn!");
-    console.log(this);
-    console.log(data);
+  toRelative: function(pos){
     const rect = this.getBoundingClientRect();
-    const {pos} = data;
-    pos.x = pos.x - rect.left;
-    pos.y = pos.y - rect.top;
-    const max = random( 4, 8 );
-    for ( let j = 0; j < max; j++ ) {
-      this.demo.spawn( pos.x, pos.y );
-    }
+    return {x: pos.x - rect.left, y: pos.y - rect.top};
+  },
+  spawn: function(data){
+    let {src, dst} = data;
+    src = this.toRelative(src);
+    dst = this.toRelative(dst);
+    // console.log(src);
+    // console.log(dst);
+    this.demo.spawnSpline(src, dst);
   },
   initFx: function() {
     var MAX_PARTICLES = 280;
     var COLOURS = [ '#69D2E7', '#A7DBD8', '#E0E4CC', '#F38630', '#FA6900', '#FF4E50', '#F9D423' ];
     var particles = [];
     var pool = [];
+    var splines = [];
+    var splinePool = [];
     var demo = Sketch.create({
         container: document.getElementById( 'canvas-host' ),
         retina: 'auto'
@@ -35,8 +50,10 @@ Polymer({
         //     demo.spawn( x, y );
         // }
     };
+    demo.spawnSpline = function(src, dst) {
+      splines.push(new ParticleSpline(this, src, dst));
+    };
     demo.spawn = function( x, y ) {
-
         var particle, theta, force;
         if ( particles.length >= MAX_PARTICLES )
             pool.push( particles.shift() );
@@ -58,6 +75,11 @@ Polymer({
             if ( particle.alive ) particle.move();
             else pool.push( particles.splice( i, 1 )[0] );
         }
+        for ( i = splines.length - 1; i >= 0; --i ) {
+          var spline = splines[i];
+          if ( spline.alive() ) spline.move();
+          else splines.splice(i, 1);
+        }
     };
     demo.draw = function() {
         demo.globalCompositeOperation  = 'lighter';
@@ -77,6 +99,55 @@ Polymer({
   }
 });
 
+class ParticleSpline {
+  curve(pts) {
+    const points = []
+    for( let i in pts ) {
+      points.push(pts[i].x);
+      points.push(pts[i].y);
+    }
+    const cps = [];
+    const results = getCurvePoints(points);
+    for( let i = 0; i < results.length / 2; ++i ){
+      cps.push({x: results[i*2], y: results[i*2+1]});
+    }
+    return cps;
+  }
+  constructor(demo, src, dst){
+    const NUM_POINTS = 4;
+    const d = {x: dst.x - src.x, y: dst.y - src.y};
+    const n = {x: d.y * 0.25, y: d.x * 0.25};
+    this.demo = demo;
+    this.ptIndex = 0;
+    let pts = [];
+    for (let i = 0; i < NUM_POINTS; ++i) {
+      let pt = VL.slerp(src, dst, i / (NUM_POINTS - 1));
+      if (i != 0 && i != NUM_POINTS - 1){
+        pt = VL.add(pt, VL.scale(n, random(-1, 1)));
+      }
+      pts.push(pt);
+    }
+    this.p = this.curve(pts);
+    // const max = 1;// random( 4, 8 );
+    // for (let i = 0; i < this.p.length; i++) {
+    //   for (let j = 0; j < max; j++) {
+    //     this.demo.spawn( this.p[i].x, this.p[i].y );
+    //   }
+    // }
+  }
+
+  move(){
+    const max = 1;
+    const i = this.ptIndex;
+    for (let j = 0; j < max; j++) {
+      this.demo.spawn( this.p[i].x, this.p[i].y );
+    }
+    this.ptIndex++;
+  }
+  alive() {
+    return this.ptIndex < this.p.length;
+  }
+}
 // ----------------------------------------
 // Particle
 // ----------------------------------------
