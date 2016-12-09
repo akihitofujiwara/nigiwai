@@ -14,10 +14,10 @@ Polymer({
   render(reactionCount, waveIncrement) {
     d3.select('#bar')
       .transition()
-      .duration(1000)
+      .duration(1250)
       .attr({
-        "y": waveIncrement ? this.calY(reactionCount) : this.calY(reactionCount + 10),
-        "height": waveIncrement ? this.calHeight(reactionCount) : this.calHeight(reactionCount + 10)
+        "y": waveIncrement ? this.calY(reactionCount) : this.calY(reactionCount + 5),
+        "height": waveIncrement ? this.calHeight(reactionCount) : this.calHeight(reactionCount + 5)
       })
   },
 
@@ -25,7 +25,7 @@ Polymer({
     this.waveIncrement = true;
     setInterval(()=>{
       this.set("waveIncrement", !this.waveIncrement)
-    }, 1000);
+    }, 1250);
   },
 
   calY(count){
