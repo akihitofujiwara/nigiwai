@@ -1,0 +1,17 @@
+link(rel="import" href="../../../bower_components/polymer/polymer.html")
+
+dom-module#user-icon
+  template
+    style(include="iron-flex iron-flex-factors iron-positioning")
+    style(is="custom-style").
+      :host {
+        border-radius: 100%;
+        width: 40px;
+        height: 40px;
+        overflow: hidden;
+      }
+      img{
+        width: 100%;
+      }
+    img(src$="[[user.photoURL]]")
+  script(src="./user-icon.js")

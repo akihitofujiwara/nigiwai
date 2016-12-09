@@ -1,5 +1,6 @@
 link(rel="import" href="../../../bower_components/polymer/polymer.html")
 link(rel="import" href="../../../bower_components/polymerfire/firebase-auth.html")
+link(rel="import" href="../user-icon/user-icon.html")
 
 dom-module#user-block
   template
@@ -8,21 +9,12 @@ dom-module#user-block
       :host {
         display: block;
       }
-      .image {
-        border-radius: 100%;
-        width: 40px;
-        height: 40px;
-        overflow: hidden;
-      }
-      .image img{
-        width: 100%;
-      }
       .name {
         margin-left: 0.5rem;
       }
     firebase-auth#firebaseAuth(user="{{user}}" provider="google")
     h3.layout.horizontal.center
-      .image: img(src$="[[user.photoURL]]")
+      user-icon(user="[[user]]")
       .name [[user.displayName]]
   script(src="./user-block.js")
 
