@@ -19,14 +19,8 @@ dom-module#nigi-yakashi
     .hoge
       span.clap
         paper-button#clap(on-tap="clap" raised) パチパチ
-        paper-badge(for="clap" label="[[claps.length]]")
       span.like
         paper-button#like(on-tap="like" raised) いいね！
-        paper-badge(for="like" label="0")
       span.interesting
         paper-button#interesting(on-tap="interesting" raised) 面白いっ
-        paper-badge(for="interesting" label="0")
-      template(is="dom-repeat" items="[[claps]]")
-        audio(src="/files/sounds/clap.mp3" autoplay="[[item.autoplay]]")
   script(src="./nigi-yakashi.js")
-

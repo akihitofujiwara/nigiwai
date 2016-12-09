@@ -41,7 +41,8 @@
     "iron-icon": "PolymerElements/iron-icon#~1.0.12",
     "iron-meta": "PolymerElements/iron-meta#~1.1.2",
     "paper-dialog-behavior": "PolymerElements/paper-dialog-behavior#~1.2.7",
-    "iron-form": "PolymerElements/iron-form#~1.1.4"
+    "iron-form": "PolymerElements/iron-form#~1.1.4",
+    "d3": "3.5.17"
   },
   "resolutions": {
     "polymer": "~1.7.0",
