@@ -8,12 +8,12 @@ Polymer({
     return {x: pos.x - rect.left, y: pos.y - rect.top};
   },
   spawn: function(data){
-    let {src, dst} = data;
+    let {src, dst, finishCallback} = data;
     src = this.toRelative(src);
     dst = this.toRelative(dst);
     // console.log(src);
     // console.log(dst);
-    this.demo.spawnSpline(src, dst);
+    this.demo.spawnSpline(src, dst, finishCallback);
   },
   initFx: function() {
     var MAX_PARTICLES = 280;
@@ -29,16 +29,9 @@ Polymer({
     });
     this.demo = demo;
     demo.setup = function() {
-        // // Set off some initial particles.
-        // var i, x, y;
-        // for ( i = 0; i < 20; i++ ) {
-        //     x = ( demo.width * 0.5 ) + random( -100, 100 );
-        //     y = ( demo.height * 0.5 ) + random( -100, 100 );
-        //     demo.spawn( x, y );
-        // }
     };
-    demo.spawnSpline = function(src, dst) {
-      splines.push(new ParticleSpline(this, src, dst));
+    demo.spawnSpline = function(src, dst, finishCallback) {
+      splines.push(new ParticleSpline(this, src, dst, finishCallback));
     };
     demo.spawn = function( x, y ) {
         var particle, theta, force;
@@ -115,11 +108,12 @@ class ParticleSpline {
     }
     return cps;
   }
-  constructor(demo, src, dst){
+  constructor(demo, src, dst, finishCallback){
     const NUM_POINTS = 4;
     const d = {x: dst.x - src.x, y: dst.y - src.y};
     const n = {x: d.y * 0.25, y: d.x * 0.25};
     this.demo = demo;
+    this.finishCallback = finishCallback;
     this.ptIndex = 0;
     let pts = [];
     for (let i = 0; i < NUM_POINTS; ++i) {
@@ -141,10 +135,15 @@ class ParticleSpline {
   move(){
     const max = 1;
     const i = this.ptIndex;
-    for (let j = 0; j < max; j++) {
-      this.demo.spawn( this.p[i].x, this.p[i].y );
+    if (i < this.p.length) {
+      for (let j = 0; j < max; j++) {
+        this.demo.spawn( this.p[i].x, this.p[i].y );
+      }
     }
     this.ptIndex++;
+    if (this.ptIndex == this.p.length ) {
+      this.finishCallback();
+    }
   }
   alive() {
     return this.ptIndex < this.p.length;
