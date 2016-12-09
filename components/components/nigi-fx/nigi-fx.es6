@@ -1,17 +1,3 @@
-const VL = {
-  slerp: function(v1, v2, t){
-    return {
-      x: v1.x * (1 - t) + v2.x * t,
-      y: v1.y * (1 - t) + v2.y * t,
-    };
-  },
-  add: function(v1, v2) {
-    return {x: v1.x + v2.x, y: v1.y + v2.y};
-  },
-  scale: function(v, s) {
-    return {x: v.x * s, y: v.y * s};
-  }
-}
 Polymer({
   is: "nigi-fx",
   attached: function(){
@@ -31,7 +17,8 @@ Polymer({
   },
   initFx: function() {
     var MAX_PARTICLES = 280;
-    var COLOURS = [ '#69D2E7', '#A7DBD8', '#E0E4CC', '#F38630', '#FA6900', '#FF4E50', '#F9D423' ];
+    // var COLOURS = [ '#69D2E7', '#A7DBD8', '#E0E4CC', '#F38630', '#FA6900', '#FF4E50', '#F9D423' ];
+    var COLOURS = ['#ff4081'];
     var particles = [];
     var pool = [];
     var splines = [];
@@ -58,7 +45,7 @@ Polymer({
         if ( particles.length >= MAX_PARTICLES )
             pool.push( particles.shift() );
         particle = pool.length ? pool.pop() : new Particle();
-        particle.init( x, y, random( 5, 40 ) );
+        particle.init( x, y, random( 5, 20 ) );
         particle.wander = random( 0.5, 2.0 );
         particle.color = random( COLOURS );
         particle.drag = random( 0.9, 0.99 );
@@ -99,6 +86,21 @@ Polymer({
   }
 });
 
+const VL = {
+  slerp: function(v1, v2, t){
+    return {
+      x: v1.x * (1 - t) + v2.x * t,
+      y: v1.y * (1 - t) + v2.y * t,
+    };
+  },
+  add: function(v1, v2) {
+    return {x: v1.x + v2.x, y: v1.y + v2.y};
+  },
+  scale: function(v, s) {
+    return {x: v.x * s, y: v.y * s};
+  }
+};
+
 class ParticleSpline {
   curve(pts) {
     const points = []
@@ -107,7 +109,7 @@ class ParticleSpline {
       points.push(pts[i].y);
     }
     const cps = [];
-    const results = getCurvePoints(points);
+    const results = getCurvePoints(points, 0.5, 10);
     for( let i = 0; i < results.length / 2; ++i ){
       cps.push({x: results[i*2], y: results[i*2+1]});
     }
@@ -181,7 +183,8 @@ Particle.prototype = {
     draw: function( ctx ) {
         ctx.beginPath();
         ctx.arc( this.x, this.y, this.radius, 0, TWO_PI );
-        ctx.fillStyle = this.color;
+        // ctx.fillStyle = this.color;
+        ctx.fillStyle = 'rgb(255, 64, 129)';
         ctx.fill();
     }
 };
