@@ -46,16 +46,17 @@ dom-module#page-room
             .title.flex [[room.name]]
             paper-icon-button(icon="image:edit" on-tap="openEditor")
           .horizontal.layout.around-justified
-            .vertical.layout.flex
+            template(is="dom-if" if="[[refreshed]]" restamp entry-animation="fade-in-animation" exit-animation="fade-out-animation")
+              .vertical.layout.flex
+                paper-card
+                  .card-content
+                    agreeable-board(room-id="[[roomId]]")
+                paper-card
+                  .card-content
+                    nigi-yakashi(room-id="[[roomId]]" room="[[room]]")
               paper-card
                 .card-content
-                  agreeable-board(room-id="[[roomId]]")
-              paper-card
-                .card-content
-                  nigi-yakashi(room-id="[[roomId]]" room="[[room]]")
-            paper-card
-              .card-content
-                reaction-gauge(room="[[room]]")
-            nigi-fx#nigi-fx
+                  reaction-gauge(room="[[room]]")
+              nigi-fx#nigi-fx
       room-editor(modal opened="{{isOpeningEditor}}" room="[[editedRoom]]" on-iron-overlay-opened="onEditorOpened" on-iron-overlay-closed="onEditorClosed")
   script(src="./page-room.js")
