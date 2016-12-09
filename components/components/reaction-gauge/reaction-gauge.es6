@@ -22,6 +22,14 @@ Polymer({
       })
   },
 
+  flash() {
+    d3.select('#barFlash')
+      .transition().duration(200)
+        .attr({'fill-opacity': 0.5})
+      .transition().duration(200)
+        .attr({'fill-opacity': 0.0});
+  },
+
   attached(){
     this.waveIncrement = true;
     setInterval(()=>{

@@ -29,15 +29,21 @@ class NigiYakashi {
   center(rect) {
     return {x: (rect.left + rect.right) * 0.5, y: (rect.top + rect.bottom) * 0.5};
   }
-  gaugePoint(react) {
-    const gauge = document.querySelector('reaction-gauge');
-    return gauge.gaugeTopPosition();
+  gauge() {
+    return document.querySelector('reaction-gauge');
+  }
+  gaugePoint() {
+    return this.gauge().gaugeTopPosition();
   }
   playFx(type) {
     const button = document.getElementById(type);
     if (button) {
       const buttonRect = button.getBoundingClientRect()
-      this.fx().spawn({src: this.center(buttonRect), dst: this.gaugePoint()});
+      this.fx().spawn({
+        src: this.center(buttonRect),
+        dst: this.gaugePoint(),
+        finishCallback: () => { this.gauge().flash(); },
+      });
     }
   }
   effect(type) {
