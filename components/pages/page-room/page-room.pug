@@ -17,36 +17,32 @@ link(rel="import" href="../../../bower_components/polymerfire/firebase-auth.html
 link(rel="import" href="../../components/agreeable-board/agreeable-board.html")
 link(rel="import" href="../../components/nigi-yakashi/nigi-yakashi.html")
 link(rel="import" href="../../components/reaction-gauge/reaction-gauge.html")
+<<<<<<< HEAD
 link(rel="import" href="../../components/nigi-fx/nigi-fx.html")
+=======
+link(rel="import" href="../../components/user-block/user-block.html")
+link(rel="import" href="../../components/nigiwai-logo/nigiwai-logo.html")
+link(rel="import" href="../../components/rooms-list/rooms-list.html")
+>>>>>>> f5bbfe1fc4c9c71a62f8d3e66202cf0102643854
 
 dom-module#page-room
   template
     style(include="iron-flex iron-flex-factors iron-positioning")
     style(is="custom-style").
+      [drawer] {
+        padding: 1rem;
+      }
       paper-card {
         margin: 1rem;
-      }
-      .user .image {
-        border-radius: 100%;
-        width: 40px;
-        height: 40px;
-        overflow: hidden;
-      }
-      .user .image img{
-        width: 100%;
       }
     template(is="dom-if" if="[[active]]" restamp)
       firebase-auth#firebaseAuth(user="{{user}}" provider="google")
       firebase-document(path="/rooms/[[roomId]]" data="{{room}}")
       paper-drawer-panel(responsive-width="960px")
-        div(drawer)
-          .layout.vertical
-            h2.title
-              a(href="#/") Nigiwai
-            // コンポーネント化したい
-            h3.user.layout.horizontal.center
-              .image: img(src$="[[user.photoURL]]")
-              .name [[user.displayName]]
+        div.layout.vertical(drawer)
+          nigiwai-logo
+          user-block
+          rooms-list(room-id="[[roomId]]")
         paper-header-panel(main)
           paper-toolbar
             paper-icon-button(icon="menu" paper-drawer-toggle)
@@ -56,13 +52,13 @@ dom-module#page-room
             .vertical.layout.flex
               paper-card
                 .card-content
-                  agreeable-board(room-id="[[roomId]]")
+                  agreeable-board(comments="[[comments]]")
               paper-card
                 .card-content
-                  nigi-yakashi(room-id="[[roomId]]")
+                  nigi-yakashi
             paper-card
               .card-content
-                reaction-gauge(room-id="[[roomId]]")
+                reaction-gauge(comments="[[comments]]" reactions="[[reactions]]")
             nigi-fx#nigi-fx
       paper-dialog#dialog(modal on-iron-overlay-closed="onEditorClosed" on-iron-overlay-opened="onEditorOpened")
         header

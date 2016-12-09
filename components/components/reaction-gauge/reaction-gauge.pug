@@ -12,8 +12,18 @@ dom-module#reaction-gauge
         min-width: 200px;
         min-height: 400px;
       }
-    .hoge 500
-    #gauge
+    firebase-auth#firebaseAuth(user="{{user}}" provider="google")
+    firebase-query#firebaseReactions(path="/rooms/[[roomId]]/reactions" data="{{reactions}}")
+    svg(viewbox='0 0 200 400')
+      def
+        g#gauge
+          path#path4.cls-1(d='M100,289.75c-6.79-11.32-18.11-19.25-31.7-19.25-19.25,0-34,18.89-34,34,0,29.26,20.38,43,65.66,86,45.28-43,65.66-56.78,65.66-86,0-15.07-14.72-34-34-34C118.11,270.5,106.79,278.43,100,289.75Z', transform='translate(-34.34 -10.23)')
+          path#path4-2.cls-1(data-name='path4', d='M100,159.61c-6.79-11.32-18.11-19.25-31.7-19.25-19.25,0-34,18.89-34,34,0,29.26,20.38,43,65.66,86,45.28-43,65.66-56.78,65.66-86,0-15.07-14.72-34-34-34C118.11,140.37,106.79,148.29,100,159.61Z', transform='translate(-34.34 -10.23)')
+          path#path4-3.cls-1(data-name='path4', d='M100,29.48C93.21,18.16,81.89,10.23,68.3,10.23c-19.25,0-34,18.89-34,34,0,29.26,20.38,43,65.66,86,45.28-43,65.66-56.78,65.66-86,0-15.07-14.72-34-34-34C118.11,10.23,106.79,18.16,100,29.48Z', transform='translate(-34.34 -10.23)')
+      mask#mask(maskunits='userSpaceOnUse', x='0', y='0', width='200', height='400')
+        use(xmlns:xlink='http://www.w3.org/1999/xlink', xlink:href='#gauge', x='40', y='0', fill='white', transform='translate(-0,-0) scale(1,1)')
+      rect(mask='url(#mask)', x='0', y='0', width='200', height='400', fill='gray')
+      rect#bar(mask='url(#mask)', x='0', y='0', width='200', height='0', fill='#ff4081')
   script(src="./reaction-gauge.js")
 
 
