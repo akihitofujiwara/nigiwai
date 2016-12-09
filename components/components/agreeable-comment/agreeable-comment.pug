@@ -6,7 +6,6 @@ link(rel="import" href="../../../bower_components/polymerfire/firebase-auth.html
 dom-module#agreeable-comment
   template
     style(include="iron-flex iron-flex-factors iron-positioning")
-    
     firebase-auth#firebaseAuth(user="{{user}}" provider="google")
     firebase-query#firebase(path="/rooms/[[roomId]]/comments/[[comment.$key]]/agreements" data="{{agreements}}")
     firebase-query(path="/users" data="{{users}}")
@@ -14,7 +13,7 @@ dom-module#agreeable-comment
       p.body [[comment.body]]
       paper-button(raised on-tap="meToo" data="{{comment}}") me too!
       template(is="dom-repeat" items="[[agreements]]")
-        user-icon(user="[[user(item, users)]]")
+        user-icon(user="[[findUser(item, users)]]")
   script(src="./agreeable-comment.js")
 
 
