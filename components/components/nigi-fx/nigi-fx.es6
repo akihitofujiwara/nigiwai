@@ -124,12 +124,6 @@ class ParticleSpline {
       pts.push(pt);
     }
     this.p = this.curve(pts);
-    // const max = 1;// random( 4, 8 );
-    // for (let i = 0; i < this.p.length; i++) {
-    //   for (let j = 0; j < max; j++) {
-    //     this.demo.spawn( this.p[i].x, this.p[i].y );
-    //   }
-    // }
   }
 
   move(){
@@ -177,13 +171,13 @@ Particle.prototype = {
         this.vx += sin( this.theta ) * 0.1;
         this.vy += cos( this.theta ) * 0.1;
         this.radius *= 0.96;
+        this.color = d3.color(this.color).brighter(0.1).toString();
         this.alive = this.radius > 0.5;
     },
     draw: function( ctx ) {
         ctx.beginPath();
         ctx.arc( this.x, this.y, this.radius, 0, TWO_PI );
-        // ctx.fillStyle = this.color;
-        ctx.fillStyle = 'rgb(255, 64, 129)';
+        ctx.fillStyle = this.color;
         ctx.fill();
     }
 };

@@ -1,3 +1,4 @@
+const seVolume = 0.5;
 class NigiYakashi {
   attached(){
     const soundFiles = {
@@ -7,7 +8,7 @@ class NigiYakashi {
     };
     this.sounds = {};
     for(const key in soundFiles){
-      this.sounds[key] = new Howl({src: soundFiles[key]});
+      this.sounds[key] = new Howl({src: soundFiles[key], volume: seVolume});
     }
     this.reactionsRef = firebase.database().ref(`/rooms/${this.roomId}/reactions`)
     this.reactionsRef.limitToLast(1).on('child_added', (data) => {
@@ -23,7 +24,7 @@ class NigiYakashi {
     const sound = this.sounds[type];
     if (sound) {
       const id = sound.play();
-      sound.fade(1, 0, 3000, id);
+      sound.fade(seVolume, 0, 3000, id);
     }
   }
   center(rect) {
