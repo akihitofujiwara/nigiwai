@@ -43,7 +43,7 @@ dom-module#page-room
           paper-toolbar
             paper-icon-button(icon="menu" paper-drawer-toggle)
             .title.flex [[room.name]]
-            paper-icon-button(icon="image:edit" on-tap="openDialog")
+            paper-icon-button(icon="image:edit" on-tap="openEditor")
           .horizontal.layout.around-justified
             .vertical.layout.flex
               paper-card
@@ -55,13 +55,6 @@ dom-module#page-room
             paper-card
               .card-content
                 reaction-gauge(comments="[[comments]]" reactions="[[reactions]]")
-      paper-dialog#dialog(modal on-iron-overlay-closed="onEditorClosed" on-iron-overlay-opened="onEditorOpened")
-        header
-          h2 ルーム編集
-        .main
-          paper-input(label="ルーム名" value="{{room.name}}")
-        footer
-          paper-button(raised dialog-dismiss) Cancel
-          paper-button(raised dialog-confirm autofocus) Save
+      room-editor(modal opened="{{isOpeningEditor}}" room="[[editedRoom]]" on-iron-overlay-opened="onEditorOpened" on-iron-overlay-closed="onEditorClosed")
   script(src="./page-room.js")
 

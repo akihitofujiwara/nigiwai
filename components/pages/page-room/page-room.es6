@@ -7,13 +7,15 @@ Polymer({
     comments && this.set("comments", Object.values(comments))
     reactions && this.set("reactions", Object.values(reactions))
   },
-  openDialog() {
-    this.$.dialog.open()
+  openEditor() {
+    this.set("isOpeningEditor", true)
   },
   onEditorOpened() {
-    this.set("_room", {...this.room})
+    this.set("editedRoom", {...this.room})
   },
-  onEditorClosed({detail: {confirmed}}) {
-    if (!confirmed) this.set("room", this._room)
+  onEditorClosed({detail: {canceled}}) {
+    if (canceled) return
+    console.log(this.editedRoom)
+    this.set("room", this.editedRoom)
   },
 })

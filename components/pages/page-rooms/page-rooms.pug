@@ -63,7 +63,7 @@ dom-module#page-rooms
                     h4 [[item.name]]
                 a.fit(href$="#/room/[[item.$key]]")
       paper-fab(icon="add" on-tap="openEditor")
-      room-editor(modal opened="{{isOpeningEditor}}" room="[[newRoom]]" on-iron-overlay-opened="onEditorOpened" on-iron-overlay-closed="onEditorClosed")
+      room-editor(modal opened="{{isOpeningEditor}}" is-new room="[[newRoom]]" on-iron-overlay-opened="onEditorOpened" on-iron-overlay-closed="onEditorClosed")
   script(src="./page-rooms.js")
 
 
