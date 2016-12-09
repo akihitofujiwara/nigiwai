@@ -9,6 +9,7 @@ link(rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-lay
 link(rel="import" href="../../../bower_components/iron-list/iron-list.html")
 link(rel="import" href="../../../bower_components/iron-icon/iron-icon.html")
 link(rel="import" href="../../../bower_components/paper-fab/paper-fab.html")
+link(rel="import" href="../../dialogs/room-editor/room-editor.html")
 
 dom-module#page-rooms
   template
@@ -47,7 +48,7 @@ dom-module#page-rooms
         width: 100%;
       }
     template(is="dom-if" if="[[active]]" restamp)
-      firebase-auth#firebaseAuth(user="{{user}}" provider="google")
+      firebase-auth(user="{{user}}" provider="google")
       firebase-query#firebaseRooms(path="/rooms" data="{{rooms}}")
       paper-drawer-panel(responsive-width="960px")
         div(drawer)
@@ -69,15 +70,8 @@ dom-module#page-rooms
                   .card-content.fit.layout.vertical.center.center-justified
                     h4 [[item.name]]
                 a.fit(href$="#/room/[[item.$key]]")
-      paper-dialog#dialog(modal on-iron-overlay-closed="onEditorClosed" on-iron-overlay-opened="onEditorOpened")
-        header
-          h2 ルーム作成
-        .main
-          paper-input(label="ルーム名" value="{{room.name}}")
-        footer
-          paper-button(raised dialog-dismiss) Cancel
-          paper-button(raised dialog-confirm autofocus) Save
-      paper-fab(icon="add" on-tap="openDialog")
+      paper-fab(icon="add" on-tap="openEditor")
+      room-editor(modal opened="{{isOpeningEditor}}" room="[[newRoom]]" on-iron-overlay-opened="onEditorOpened" on-iron-overlay-closed="onEditorClosed")
   script(src="./page-rooms.js")
 
 

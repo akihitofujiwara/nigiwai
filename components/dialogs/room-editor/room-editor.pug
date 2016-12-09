@@ -1,0 +1,18 @@
+link(rel="import" href="../../../bower_components/polymer/polymer.html")
+link(rel="import" href="../../../bower_components/paper-dialog-behavior/paper-dialog-behavior.html")
+link(rel="import" href="../../../bower_components/paper-dialog-behavior/paper-dialog-shared-styles.html")
+link(rel="import" href="../../../bower_components/paper-input/paper-input.html")
+link(rel="import" href="../../../bower_components/paper-button/paper-button.html")
+link(rel="import" href="../../../bower_components/iron-form/iron-form.html")
+
+dom-module#room-editor
+  template
+    style(include="paper-dialog-shared-styles")
+    h2 ルーム作成
+    form(is="iron-form" on-submit="submit")
+      .inputs
+        paper-input(label="ルーム名" value="{{room.name}}")
+      .buttons
+        paper-button(raised on-tap="cancel") Cancel
+        paper-button(raised on-tap="submit") Save
+  script(src="./room-editor.js")
