@@ -1,10 +1,14 @@
 global <<<< require \prelude-ls
-require! <[gulp gulp-plumber gulp-serve gulp-watch gulp-babel gulp-pug run-sequence]>
+require! <[gulp gulp-plumber gulp-webserver gulp-watch gulp-babel gulp-pug run-sequence]>
 
 gulp.task \dev, ->
   run-sequence \build, <[watch serve]>
 
-gulp.task \serve, gulp-serve \.
+gulp.task \serve, ->
+  gulp.src \. .pipe gulp-webserver(
+    host: process.env.IP
+    port: process.env.PORT || 3000
+  )
 
 gulp.task \build, ->
   run-sequence <[es6 pug index-pug]>

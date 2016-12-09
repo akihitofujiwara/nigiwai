@@ -6,7 +6,7 @@ class ApplicationRoot {
   }
   get observers() {
     return [
-      "setActiveRouteName(route)",
+      "setActiveRouteName(route.path)",
       "registerUser(authUser)"
     ]
   }
@@ -16,7 +16,8 @@ class ApplicationRoot {
   signIn() {
     if (!this.signedIn) this.$.firebaseAuth.signInWithPopup()
   }
-  setActiveRouteName(route) {
+  setActiveRouteName(path) {
+    if (!path) return
     this.set(
       "activeRouteName",
       Polymer.dom(this.root).querySelectorAll("app-route").find(({active})=> active).getAttribute("name")
