@@ -1,5 +1,6 @@
 Polymer({
   is: "reaction-gauge",
+  maxCount: 500,
 
   observers: [
     "setReactionCount(room)",
@@ -29,11 +30,20 @@ Polymer({
   },
 
   calY(count){
-    return 400 - (count / 500.0) * 400.0;
+    return 400 - (count / this.maxCount) * 400.0;
   },
 
   calHeight(count){
-    return (count / 500.0) * 400.0
+    return (count / this.maxCount) * 400.0
   },
-})
 
+  gaugeTopPosition(){
+    const gaugeRect = this.getBoundingClientRect();
+    const t = Math.min(this.reactionCount / this.maxCount, this.maxCount);
+    return {
+      x: (gaugeRect.left + gaugeRect.right) * 0.5,
+      y: gaugeRect.bottom * (1 - t) + gaugeRect.top * t,
+    };
+  }
+
+})

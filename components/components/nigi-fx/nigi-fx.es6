@@ -87,7 +87,7 @@ Polymer({
 });
 
 const VL = {
-  slerp: function(v1, v2, t){
+  lerp: function(v1, v2, t){
     return {
       x: v1.x * (1 - t) + v2.x * t,
       y: v1.y * (1 - t) + v2.y * t,
@@ -123,7 +123,7 @@ class ParticleSpline {
     this.ptIndex = 0;
     let pts = [];
     for (let i = 0; i < NUM_POINTS; ++i) {
-      let pt = VL.slerp(src, dst, i / (NUM_POINTS - 1));
+      let pt = VL.lerp(src, dst, i / (NUM_POINTS - 1));
       if (i != 0 && i != NUM_POINTS - 1){
         pt = VL.add(pt, VL.scale(n, random(-1, 1)));
       }
