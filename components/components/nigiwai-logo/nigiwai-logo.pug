@@ -2,6 +2,11 @@ link(rel="import" href="../../../bower_components/polymer/polymer.html")
 
 dom-module#nigiwai-logo
   template
+    style(is="custom-style").
+      a {
+        text-decoration: none;
+        color: var(--accent-color);
+      }
     h2.title
       a(href="#/") Nigiwai
   script(src="./nigiwai-logo.js")

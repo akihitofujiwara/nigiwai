@@ -10,7 +10,7 @@ Polymer({
   },
   refresh(roomId) {
     this.set("refreshed", false)
-    this.async((()=> this.set("refreshed", true)), 100)
+    this.async((()=> this.set("refreshed", true)))
   },
   openEditor() {
     this.set("isOpeningEditor", true)
