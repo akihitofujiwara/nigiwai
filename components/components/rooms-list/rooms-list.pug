@@ -1,0 +1,22 @@
+link(rel="import" href="../../../bower_components/polymer/polymer.html")
+link(rel="import" href="../../../bower_components/paper-listbox/paper-listbox.html")
+link(rel="import" href="../../../bower_components/paper-item/paper-item.html")
+link(rel="import" href="../../../bower_components/polymerfire/firebase-query.html")
+
+dom-module#rooms-list
+  template
+    style(include="iron-flex iron-flex-factors iron-positioning")
+    style(is="custom-style").
+      a {
+        line-height: 48px;
+        padding: 0 0.8rem;
+        text-decoration: none;
+        color: #333;
+      }
+    firebase-query(path="/rooms" data="{{rooms}}")
+    paper-listbox(selected="{{roomId}}" attr-for-selected="id")
+      template(is="dom-repeat" items="[[rooms]]")
+        paper-item(id="[[item.$key]]")
+          a.fit(href="#/room/[[item.$key]]") [[item.name]]
+  script(src="./rooms-list.js")
+
