@@ -18,11 +18,16 @@ link(rel="import" href="../../components/agreeable-board/agreeable-board.html")
 link(rel="import" href="../../components/nigi-yakashi/nigi-yakashi.html")
 link(rel="import" href="../../components/reaction-gauge/reaction-gauge.html")
 link(rel="import" href="../../components/user-block/user-block.html")
+link(rel="import" href="../../components/nigiwai-logo/nigiwai-logo.html")
+link(rel="import" href="../../components/rooms-list/rooms-list.html")
 
 dom-module#page-room
   template
     style(include="iron-flex iron-flex-factors iron-positioning")
     style(is="custom-style").
+      [drawer] {
+        padding: 1rem;
+      }
       paper-card {
         margin: 1rem;
       }
@@ -30,11 +35,10 @@ dom-module#page-room
       firebase-auth#firebaseAuth(user="{{user}}" provider="google")
       firebase-document(path="/rooms/[[roomId]]" data="{{room}}")
       paper-drawer-panel(responsive-width="960px")
-        div(drawer)
-          .layout.vertical
-            h2.title
-              a(href="#/") Nigiwai
-            user-block
+        div.layout.vertical(drawer)
+          nigiwai-logo
+          user-block
+          rooms-list(room-id="[[roomId]]")
         paper-header-panel(main)
           paper-toolbar
             paper-icon-button(icon="menu" paper-drawer-toggle)
@@ -44,13 +48,13 @@ dom-module#page-room
             .vertical.layout.flex
               paper-card
                 .card-content
-                  agreeable-board(room-id="[[roomId]]")
+                  agreeable-board(comments="[[comments]]")
               paper-card
                 .card-content
-                  nigi-yakashi(room-id="[[roomId]]")
+                  nigi-yakashi
             paper-card
               .card-content
-                reaction-gauge(room-id="[[roomId]]")
+                reaction-gauge(comments="[[comments]]" reactions="[[reactions]]")
       paper-dialog#dialog(modal on-iron-overlay-closed="onEditorClosed" on-iron-overlay-opened="onEditorOpened")
         header
           h2 ルーム編集

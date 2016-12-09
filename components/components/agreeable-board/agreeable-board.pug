@@ -14,7 +14,6 @@ dom-module#agreeable-board
         min-height: 200px;
       }
     firebase-auth#firebaseAuth(user="{{user}}" provider="google")
-    firebase-query#firebase(path="/rooms/[[roomId]]/comments" data="{{comments}}")
     firebase-query(path="/users" data="{{users}}")
     .comments
       template(is="dom-repeat" items="[[comments]]")

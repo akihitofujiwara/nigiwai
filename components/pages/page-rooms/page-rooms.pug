@@ -11,11 +11,15 @@ link(rel="import" href="../../../bower_components/iron-icon/iron-icon.html")
 link(rel="import" href="../../../bower_components/paper-fab/paper-fab.html")
 link(rel="import" href="../../dialogs/room-editor/room-editor.html")
 link(rel="import" href="../../components/user-block/user-block.html")
+link(rel="import" href="../../components/nigiwai-logo/nigiwai-logo.html")
 
 dom-module#page-rooms
   template
     style(include="iron-flex iron-flex-factors iron-positioning")
     style(is="custom-style").
+      [drawer] {
+        padding: 1rem;
+      }
       iron-list {
         margin-top: 2rem;
       }
@@ -39,23 +43,13 @@ dom-module#page-rooms
       a {
         text-decoration: none;
       }
-      .user .image {
-        border-radius: 100%;
-        width: 40px;
-        height: 40px;
-        overflow: hidden;
-      }
-      .user .image img{
-        width: 100%;
-      }
     template(is="dom-if" if="[[active]]" restamp)
       firebase-auth(user="{{user}}" provider="google")
       firebase-query#firebaseRooms(path="/rooms" data="{{rooms}}")
       paper-drawer-panel(responsive-width="960px")
         div(drawer)
           .layout.vertical
-            h2.title
-              a(href="#/") Nigiwai
+            nigiwai-logo
             user-block
         paper-header-panel(main)
           paper-toolbar
