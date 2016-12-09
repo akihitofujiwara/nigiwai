@@ -3,6 +3,7 @@ link(rel="import" href="../../../bower_components/paper-input/paper-input.html")
 link(rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout-classes.html")
 link(rel="import" href="../../../bower_components/polymerfire/firebase-query.html")
 link(rel="import" href="../../../bower_components/polymerfire/firebase-auth.html")
+link(rel="import" href="../agreeable-comment/agreeable-comment.html")
 
 dom-module#agreeable-board
   template
@@ -16,13 +17,16 @@ dom-module#agreeable-board
       .comments paper-button {
         padding: 0;
       }
+<<<<<<< Updated upstream
+=======
+    
+>>>>>>> Stashed changes
     firebase-auth#firebaseAuth(user="{{user}}" provider="google")
     firebase-query#firebase(path="/rooms/[[roomId]]/comments" data="{{comments}}")
     firebase-query(path="/users" data="{{users}}")
     .comments
       template(is="dom-repeat" items="[[comments]]")
-        .comment
-          p.body [[item.body]]
+        agreeable-comment(comment="[[item]]" room-id="[[roomId]]")
     form(is="iron-form" on-submit="submit")
       .layout.horizontal.center
         paper-input.flex(label="コメント" value="{{newComment.body}}")
