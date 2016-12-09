@@ -21,4 +21,3 @@ class PageRooms {
   }
 }
 Polymer(PageRooms.prototype)
-
