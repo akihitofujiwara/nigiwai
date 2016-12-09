@@ -44,7 +44,7 @@ dom-module#page-rooms
         text-decoration: none;
       }
     template(is="dom-if" if="[[active]]" restamp)
-      firebase-auth(user="{{user}}" provider="google")
+      firebase-auth#firebaseAuth(user="{{user}}" provider="google")
       firebase-query#firebaseRooms(path="/rooms" data="{{rooms}}")
       paper-drawer-panel(responsive-width="960px")
         div(drawer)
@@ -61,10 +61,17 @@ dom-module#page-rooms
                 paper-card.fit
                   .card-content.fit.layout.vertical.center.center-justified
                     h4 [[item.name]]
+                    h4 [[countReaction(item)]]
                 a.fit(href$="#/room/[[item.$key]]")
+      paper-dialog#dialog(modal on-iron-overlay-closed="onEditorClosed" on-iron-overlay-opened="onEditorOpened")
+        header
+          h2 ルーム作成
+        .main
+          paper-input(label="ルーム名" value="{{room.name}}")
+        footer
+          paper-button(raised dialog-dismiss) Cancel
+          paper-button(raised dialog-confirm autofocus) Save
+      paper-fab(icon="add" on-tap="openDialog")
       paper-fab(icon="add" on-tap="openEditor")
       room-editor(modal opened="{{isOpeningEditor}}" is-new room="[[newRoom]]" on-iron-overlay-opened="onEditorOpened" on-iron-overlay-closed="onEditorClosed")
   script(src="./page-rooms.js")
-
-
-
