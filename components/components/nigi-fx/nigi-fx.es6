@@ -1,20 +1,31 @@
+const VL = {
+  slerp: function(v1, v2, t){
+    return {
+      x: v1.x * (1 - t) + v2.x * t,
+      y: v1.y * (1 - t) + v2.y * t,
+    };
+  }
+}
 Polymer({
   is: "nigi-fx",
   attached: function(){
     this.initFx();
   },
-  spawn: function(data){
-    console.log("spawn!");
-    console.log(this);
-    console.log(data);
+  toRelative: function(pos){
     const rect = this.getBoundingClientRect();
-    const {pos} = data;
-    pos.x = pos.x - rect.left;
-    pos.y = pos.y - rect.top;
-    const max = random( 4, 8 );
-    for ( let j = 0; j < max; j++ ) {
-      this.demo.spawn( pos.x, pos.y );
-    }
+    return {x: pos.x - rect.left, y: pos.y - rect.top};
+  },
+  spawn: function(data){
+    let {src, dst} = data;
+    src = this.toRelative(src);
+    dst = this.toRelative(dst);
+    console.log(src);
+    console.log(dst);
+    new ParticleSpline(this.demo, src, dst);
+    // const max = random( 4, 8 );
+    // for ( let j = 0; j < max; j++ ) {
+    //   this.demo.spawn( dst.x, dst.y );
+    // }
   },
   initFx: function() {
     var MAX_PARTICLES = 280;
@@ -36,7 +47,6 @@ Polymer({
         // }
     };
     demo.spawn = function( x, y ) {
-
         var particle, theta, force;
         if ( particles.length >= MAX_PARTICLES )
             pool.push( particles.shift() );
@@ -77,6 +87,29 @@ Polymer({
   }
 });
 
+class ParticleSpline {
+  constructor(demo, src, dst){
+    console.log("constructor!");
+    const NUM_POINTS = 10;
+    const d = {x: dst.x - src.x, y: dst.y - src.y};
+    const n = {x: d.y, y: d.x};
+    this.demo = demo;
+    this.p = [];
+    for (let i = 0; i < NUM_POINTS; ++i) {
+      this.p.push(VL.slerp(src, dst, i / (NUM_POINTS - 1)));
+    }
+    console.log(this.p);
+    const max = random( 4, 8 );
+    for (let i = 0; i < NUM_POINTS; i++) {
+      for (let j = 0; j < max; j++) {
+        this.demo.spawn( this.p[i].x, this.p[i].y );
+      }
+    }
+  }
+
+  move(){
+  }
+}
 // ----------------------------------------
 // Particle
 // ----------------------------------------

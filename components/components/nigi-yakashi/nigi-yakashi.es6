@@ -26,11 +26,16 @@ class NigiYakashi {
       sound.fade(1, 0, 3000, id);
     }
   }
+  center(rect) {
+    return {x: (rect.left + rect.right) * 0.5, y: (rect.top + rect.bottom) * 0.5};
+  }
   playFx(type) {
     const button = document.getElementById(type);
-    if (button) {
-      const rect = button.getBoundingClientRect()
-      this.fx().spawn({pos: {x: (rect.left + rect.right) * 0.5, y: (rect.top + rect.bottom) * 0.5}});
+    const gauge = document.querySelector('reaction-gauge');
+    if (button && gauge) {
+      const buttonRect = button.getBoundingClientRect()
+      const gaugeRect = gauge.getBoundingClientRect();
+      this.fx().spawn({src: this.center(buttonRect), dst: this.center(gaugeRect) });
     }
   }
   effect(type) {
