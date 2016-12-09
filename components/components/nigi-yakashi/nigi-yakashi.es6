@@ -18,6 +18,7 @@ class NigiYakashi {
     });
   }
   get is() { return "nigi-yakashi" }
+  fx() { return document.querySelector('nigi-fx'); }
   playSound(type) {
     const sound = this.sounds[type];
     if (sound) {
@@ -25,10 +26,19 @@ class NigiYakashi {
       sound.fade(1, 0, 3000, id);
     }
   }
+  playFx(type) {
+    const button = document.getElementById(type);
+    if (button) {
+      const rect = button.getBoundingClientRect()
+      this.fx().spawn({pos: {x: (rect.left + rect.right) * 0.5, y: (rect.top + rect.bottom) * 0.5}});
+    }
+  }
   effect(type) {
+    this.playFx(type);
     const {user, $: {firebaseReactions: {ref}}} = this;
     ref.push({type, createdBy: user.uid, createdAt: firebase.database.ServerValue.TIMESTAMP});
   }
+
   clap() {
     this.effect("clap")
   }

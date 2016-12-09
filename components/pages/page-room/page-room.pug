@@ -17,9 +17,13 @@ link(rel="import" href="../../../bower_components/polymerfire/firebase-auth.html
 link(rel="import" href="../../components/agreeable-board/agreeable-board.html")
 link(rel="import" href="../../components/nigi-yakashi/nigi-yakashi.html")
 link(rel="import" href="../../components/reaction-gauge/reaction-gauge.html")
+<<<<<<< HEAD
+link(rel="import" href="../../components/nigi-fx/nigi-fx.html")
+=======
 link(rel="import" href="../../components/user-block/user-block.html")
 link(rel="import" href="../../components/nigiwai-logo/nigiwai-logo.html")
 link(rel="import" href="../../components/rooms-list/rooms-list.html")
+>>>>>>> f5bbfe1fc4c9c71a62f8d3e66202cf0102643854
 
 dom-module#page-room
   template
@@ -55,6 +59,6 @@ dom-module#page-room
             paper-card
               .card-content
                 reaction-gauge(comments="[[comments]]" reactions="[[reactions]]")
+            nigi-fx#nigi-fx
       room-editor(modal opened="{{isOpeningEditor}}" room="[[editedRoom]]" on-iron-overlay-opened="onEditorOpened" on-iron-overlay-closed="onEditorClosed")
   script(src="./page-room.js")
-
