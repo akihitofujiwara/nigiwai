@@ -20,7 +20,11 @@ dom-module#nigi-yakashi
       span.clap
         paper-button#clap(on-tap="clap" raised) パチパチ
       span.like
-        paper-button#like(on-tap="like" raised) いいね！
+        paper-button#hee(on-tap="hee" raised) へー
       span.interesting
-        paper-button#interesting(on-tap="interesting" raised) 面白いっ
+        paper-button#laugh(on-tap="laugh" raised) wwww
+    .debug(style="text-align: right;")
+      span.remove
+        paper-button#remove(on-tap="remove" raised) 削除(DEBUG)
+
   script(src="./nigi-yakashi.js")

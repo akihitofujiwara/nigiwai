@@ -2,8 +2,8 @@ class NigiYakashi {
   attached(){
     const soundFiles = {
       clap: "/files/sounds/clap.mp3",
-      interesting: "/files/sounds/interesting.mp3",
-      like: "/files/sounds/interesting.mp3",
+      laugh: "/files/sounds/laugh.mp3",
+      hee: "/files/sounds/hee.mp4",
     };
     this.sounds = {};
     for(const key in soundFiles){
@@ -19,24 +19,27 @@ class NigiYakashi {
   }
   get is() { return "nigi-yakashi" }
   playSound(type) {
-    const sound = this.sounds[type]
+    const sound = this.sounds[type];
     if (sound) {
       const id = sound.play();
       sound.fade(1, 0, 3000, id);
     }
   }
   effect(type) {
-    const {user, $: {firebaseReactions: {ref}}} = this
-    ref.push({type, autoplay: true, createdBy: user.uid, createdAt: firebase.database.ServerValue.TIMESTAMP})
+    const {user, $: {firebaseReactions: {ref}}} = this;
+    ref.push({type, createdBy: user.uid, createdAt: firebase.database.ServerValue.TIMESTAMP});
   }
   clap() {
     this.effect("clap")
   }
-  like() {
-    this.effect("like")
+  hee() {
+    this.effect("hee")
   }
-  interesting() {
-    this.effect("interesting")
+  laugh() {
+    this.effect("laugh")
+  }
+  remove() {
+    this.reactionsRef.remove();
   }
 }
 
