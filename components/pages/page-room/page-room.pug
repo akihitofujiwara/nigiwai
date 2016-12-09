@@ -32,6 +32,10 @@ dom-module#page-room
       paper-card {
         margin: 1rem;
       }
+      a {
+        text-decoration: none;
+        color: var(--default-primary-color);
+      }
     template(is="dom-if" if="[[active]]" restamp)
       firebase-auth#firebaseAuth(user="{{user}}" provider="google")
       firebase-document(path="/rooms/[[roomId]]" data="{{room}}")
@@ -39,6 +43,7 @@ dom-module#page-room
         div.layout.vertical(drawer)
           nigiwai-logo
           user-block
+          a(href="#/rooms") < ルーム一覧
           rooms-list(room-id="[[roomId]]")
         paper-header-panel(main)
           paper-toolbar

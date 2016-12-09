@@ -3,6 +3,8 @@ link(rel="import" href="../../../bower_components/paper-header-panel/paper-heade
 link(rel="import" href="../../../bower_components/paper-toolbar/paper-toolbar.html")
 link(rel="import" href="../../../bower_components/paper-card/paper-card.html")
 link(rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout-classes.html")
+link(rel="import" href="../../../bower_components/polymerfire/firebase-auth.html")
+link(rel="import" href="../../components/user-block/user-block.html")
 
 dom-module#page-root
   template
@@ -12,14 +14,28 @@ dom-module#page-root
         width: 50vw;
         height: 50vh;
       }
+      h3 {
+        margin: 0;
+      }
+      user-block {
+        margin-left: 1rem;
+      }
+      ul {
+        height: 200px;
+      }
     template(is="dom-if" if="[[active]]" restamp)
+      firebase-auth(user="{{user}}")
       paper-header-panel
         paper-toolbar
           .title.flex Nigiwai
         .fit.vertical.layout.center-justified.center
-          ul
-            li: a(href="#/rooms") ルーム一覧
-            li: a(href="#/config") 設定
+          template(is="dom-if" if="[[user]]")
+            h3.horizontal.layout.center
+              span You are
+              user-block
+            ul
+              li: a(href="#/rooms") ルーム一覧
+              li: a(href="#/config") 設定
   script(src="./page-root.js")
 
 
