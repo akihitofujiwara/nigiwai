@@ -13,7 +13,7 @@ class PageRooms {
     ref.push({...newRoom, createdBy: user.uid})
   }
   countReaction(x) {
-    if (!x) return
+    if (!(x && x.reactions && x.comments)) return
     var reactions = Object.values(x.reactions).length;
     var comments = Object.values(x.comments).length; 
     return reactions + comments
