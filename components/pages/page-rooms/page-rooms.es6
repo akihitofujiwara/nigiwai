@@ -12,7 +12,12 @@ class PageRooms {
     const {newRoom, user} = this
     ref.push({...newRoom, createdBy: user.uid})
   }
+  
+  countReaction(x) {
+    if (!x) return
+    var reactions = Object.values(x.reactions).length;
+    var comments = Object.values(x.comments).length; 
+    return reactions + comments
+  }
 }
-
 Polymer(PageRooms.prototype)
-

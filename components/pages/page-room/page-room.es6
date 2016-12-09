@@ -1,19 +1,26 @@
 Polymer({
   is: "page-room",
   observers: [
-    "setValues(room)"
+    "setValues(room)",
+    "refresh(roomId)"
   ],
   setValues({comments, reactions}) {
     comments && this.set("comments", Object.values(comments))
     reactions && this.set("reactions", Object.values(reactions))
   },
-  openDialog() {
-    this.$.dialog.open()
+  refresh(roomId) {
+    this.set("refreshed", false)
+    this.async((()=> this.set("refreshed", true)), 100)
+  },
+  openEditor() {
+    this.set("isOpeningEditor", true)
   },
   onEditorOpened() {
-    this.set("_room", {...this.room})
+    this.set("editedRoom", {...this.room})
   },
-  onEditorClosed({detail: {confirmed}}) {
-    if (!confirmed) this.set("room", this._room)
+  onEditorClosed({detail: {canceled}}) {
+    if (canceled) return
+    console.log(this.editedRoom)
+    this.set("room", this.editedRoom)
   },
 })
