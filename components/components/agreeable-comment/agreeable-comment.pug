@@ -13,7 +13,7 @@ dom-module#agreeable-comment
       p.body [[comment.body]]
       paper-button(raised on-tap="meToo" data="{{comment}}") me too!
       template(is="dom-repeat" items="[[agreements]]")
-        user-icon(user="[[findUser(item, users)]]")
+        user-icon(user="[[findUser(item, users, users.length)]]")
   script(src="./agreeable-comment.js")
 
 
