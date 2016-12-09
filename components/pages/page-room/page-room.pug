@@ -52,10 +52,10 @@ dom-module#page-room
                   agreeable-board(comments="[[comments]]")
               paper-card
                 .card-content
-                  nigi-yakashi(room-id="[[roomId]]")
+                  nigi-yakashi(room-id="[[roomId]]" room="[[room]]")
             paper-card
               .card-content
-                reaction-gauge(comments="[[comments]]" reactions="[[reactions]]")
+                reaction-gauge(room="[[room]]")
             nigi-fx#nigi-fx
       room-editor(modal opened="{{isOpeningEditor}}" room="[[editedRoom]]" on-iron-overlay-opened="onEditorOpened" on-iron-overlay-closed="onEditorClosed")
   script(src="./page-room.js")
