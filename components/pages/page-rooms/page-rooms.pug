@@ -10,6 +10,7 @@ link(rel="import" href="../../../bower_components/iron-list/iron-list.html")
 link(rel="import" href="../../../bower_components/iron-icon/iron-icon.html")
 link(rel="import" href="../../../bower_components/paper-fab/paper-fab.html")
 link(rel="import" href="../../dialogs/room-editor/room-editor.html")
+link(rel="import" href="../../components/user-block/user-block.html")
 
 dom-module#page-rooms
   template
@@ -55,10 +56,7 @@ dom-module#page-rooms
           .layout.vertical
             h2.title
               a(href="#/") Nigiwai
-            // コンポーネント化したい
-            h3.user.layout.horizontal.center
-              .image: img(src$="[[user.photoURL]]")
-              .name [[user.displayName]]
+            user-block
         paper-header-panel(main)
           paper-toolbar
             paper-icon-button(icon="menu" paper-drawer-toggle)
