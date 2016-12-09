@@ -17,6 +17,7 @@ link(rel="import" href="../../../bower_components/polymerfire/firebase-auth.html
 link(rel="import" href="../../components/agreeable-board/agreeable-board.html")
 link(rel="import" href="../../components/nigi-yakashi/nigi-yakashi.html")
 link(rel="import" href="../../components/reaction-gauge/reaction-gauge.html")
+link(rel="import" href="../../components/nigi-fx/nigi-fx.html")
 
 dom-module#page-room
   template
@@ -62,6 +63,7 @@ dom-module#page-room
             paper-card
               .card-content
                 reaction-gauge(room-id="[[roomId]]")
+            nigi-fx#nigi-fx
       paper-dialog#dialog(modal on-iron-overlay-closed="onEditorClosed" on-iron-overlay-opened="onEditorOpened")
         header
           h2 ルーム編集
@@ -71,4 +73,3 @@ dom-module#page-room
           paper-button(raised dialog-dismiss) Cancel
           paper-button(raised dialog-confirm autofocus) Save
   script(src="./page-room.js")
-
