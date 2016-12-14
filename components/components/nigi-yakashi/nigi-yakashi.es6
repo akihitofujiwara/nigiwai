@@ -1,4 +1,4 @@
-const seVolume = 0.5;
+const seVolume = 0.2;
 class NigiYakashi {
   attached(){
     const soundFiles = {
