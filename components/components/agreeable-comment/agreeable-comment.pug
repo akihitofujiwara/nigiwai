@@ -2,18 +2,55 @@ link(rel="import" href="../../../bower_components/polymer/polymer.html")
 link(rel="import" href="../../../bower_components/iron-flex-layout/iron-flex-layout-classes.html")
 link(rel="import" href="../../../bower_components/polymerfire/firebase-query.html")
 link(rel="import" href="../../../bower_components/polymerfire/firebase-auth.html")
+link(rel="import" href="../../../bower_components/paper-item/paper-item.html")
+script(src="../../../bower_components/moment/moment.js")
 
 dom-module#agreeable-comment
   template
-    style(include="iron-flex iron-flex-factors iron-positioning")
+    style(include="iron-flex iron-flex-alignment iron-flex-factors iron-positioning")
+    style(is="custom-style").
+      :host {
+        display: block;
+      }
+      paper-button {
+        background-color: var(--paper-indigo-500);
+        color: white;
+        font-size: 70%;
+        margin-left: 0.8rem;
+      }
+      .info {
+        color: #888;
+        font-size: 70%;
+        margin-top: 0.3rem;
+      }
+      .commented-by user-icon {
+        margin: 0 0.3rem;
+        --user-icon-size: 30px;
+      }
+      .metoo-by {
+        margin-top: 0.2rem;
+      }
+      .metoo-by span {
+        margin-right: 0.3rem;
+      }
+      .metoo-by user-icon {
+        --user-icon-size: 20px;
+      }
     firebase-auth#firebaseAuth(user="{{user}}" provider="google")
     firebase-query#firebase(path="/rooms/[[roomId]]/comments/[[comment.$key]]/agreements" data="{{agreements}}")
     firebase-query(path="/users" data="{{users}}")
-    .comment.layout.horizontal
-      p.body [[comment.body]]
-      paper-button(raised on-tap="meToo" data="{{comment}}") me too!
-      template(is="dom-repeat" items="[[agreements]]")
-        user-icon(user="[[findUser(item, users, users.length)]]")
+    .comment.layout.vertical.start
+      .layout.horizontal.center
+        .body [[comment.body]]
+        paper-button(raised on-tap="meToo" data="{{comment}}") me too!
+      .info.vertical.horizontal.start
+        .commented-by.layout.horizontal.center
+          span Commented by
+          user-icon(user="[[findUser(comment, users, users.length)]]")
+          span [[fromNow(comment.createdAt)]]
+        .metoo-by.layout.horizontal.center.wrap
+          template(is="dom-if" if="[[!isZero(agreements.length)]]")
+            span Metoo by
+            template(is="dom-repeat" items="[[agreements]]")
+              user-icon(user="[[findUser(item, users, users.length)]]")
   script(src="./agreeable-comment.js")
-
-

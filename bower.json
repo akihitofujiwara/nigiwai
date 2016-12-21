@@ -47,7 +47,8 @@
     "paper-item": "PolymerElements/paper-item#~1.2.1",
     "sketch.js": "*",
     "cardinal-spline-js": "^2.3.6",
-    "howler.js": "howler#^2.0.2"
+    "howler.js": "howler#^2.0.2",
+    "moment": "~2.17.1"
   },
   "resolutions": {
     "polymer": "~1.7.0",

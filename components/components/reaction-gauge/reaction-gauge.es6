@@ -15,7 +15,7 @@ Polymer({
       let { comments, reactions } = snapshot.val()
       let commentsCount = Object.keys(comments).length;
       let agreementsCount = Object.values(comments).reduce( (pre, current, index, array) => {
-        return Object.keys(current).length + pre;
+        return (current.agreements && Object.keys(current.agreements).length || 0) + pre
       }, 0)
       let reactionsCount = Object.keys(reactions).length;
       _this.set("reactionCount", commentsCount + agreementsCount + reactionsCount);

@@ -4,7 +4,13 @@ Polymer({
     const {user, $: {firebase: {ref}}} = this
     ref.push({createdBy: user.uid})
   },
-  findUser(agreement, users) {
-    return users.find(({uid}) => uid == agreement.createdBy)
+  findUser(item, users) {
+    return users.find(({uid}) => uid == item.createdBy)
+  },
+  fromNow(seconds) {
+    return moment(seconds).fromNow()
+  },
+  isZero(agreementsLength) {
+    return agreementsLength == 0
   }
 })

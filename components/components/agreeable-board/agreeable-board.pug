@@ -12,21 +12,31 @@ dom-module#agreeable-board
       :host {
         display: block;
         min-width: 400px;
-        min-height: 200px;
+        height: 65vh;
       }
-      .comments paper-button {
-        padding: 0;
+      form {
+        height: 70px;
+      }
+      .comments {
+        height: calc(100% - 70px);
+        overflow: scroll;
+      }
+      .comment {
+        padding: 12px 16px;
+      }
+      .comment:nth-child(even) {
+        background-color: #f5f5f5;
       }
     firebase-auth#firebaseAuth(user="{{user}}" provider="google")
     firebase-query#firebase(path="/rooms/[[roomId]]/comments" data="{{comments}}")
     firebase-query(path="/users" data="{{users}}")
-    .comments
-      template(is="dom-repeat" items="[[comments]]")
-        agreeable-comment(comment="[[item]]" room-id="[[roomId]]")
     form(is="iron-form" on-submit="submit")
       .layout.horizontal.center
         paper-input.flex(label="コメント" value="{{newComment.body}}")
         paper-button(raised on-tap="submit") submit
+    .comments
+      template(is="dom-repeat" items="[[comments]]" sort="sortComments")
+        .comment: agreeable-comment(comment="[[item]]" room-id="[[roomId]]")
   script(src="./agreeable-board.js")
 
 
