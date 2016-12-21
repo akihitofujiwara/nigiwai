@@ -61,7 +61,7 @@ dom-module#page-room
                     nigi-yakashi(room-id="[[roomId]]" room="[[room]]")
               paper-card
                 .card-content
-                  reaction-gauge(room="[[room]]")
+                  reaction-gauge(room-id="[[roomId]]" room="[[room]]")
               nigi-fx#nigi-fx
       room-editor(modal opened="{{isOpeningEditor}}" room="[[editedRoom]]" on-iron-overlay-opened="onEditorOpened" on-iron-overlay-closed="onEditorClosed")
   script(src="./page-room.js")
