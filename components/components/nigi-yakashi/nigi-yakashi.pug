@@ -12,18 +12,28 @@ dom-module#nigi-yakashi
         display: block;
         min-width: 400px;
         height: 10vh;
+        @apply(--layout-horizontal);
+        @apply(--layout-center);
+        @apply(--layout-around-justified);
       }
-    firebase-auth#firebaseAuth(user="{{user}}" provider="google")
-    firebase-query#firebaseReactions(path="/rooms/[[roomId]]/reactions" data="{{reactions}}")
-    firebase-query(path="/users" data="{{users}}")
-    .hoge
-      span.clap
-        paper-button#clap(on-tap="clap" raised) パチパチ
-      span.like
-        paper-button#hee(on-tap="hee" raised) へー
-      span.interesting
-        paper-button#laugh(on-tap="laugh" raised) wwww
-    .debug(style="text-align: right;")
+      paper-button {
+        width: 120px;
+        color: white;
+        background-color: var(--paper-pink-a200);
+      }
+      .clap paper-button {
+      }
+    div(hidden)
+      firebase-auth#firebaseAuth(user="{{user}}" provider="google")
+      firebase-query#firebaseReactions(path="/rooms/[[roomId]]/reactions" data="{{reactions}}")
+      firebase-query(path="/users" data="{{users}}")
+    .clap
+      paper-button#clap(on-tap="clap" raised) パチパチ
+    .like
+      paper-button#hee(on-tap="hee" raised) へー
+    .interesting
+      paper-button#laugh(on-tap="laugh" raised) wwww
+    .debug(style="text-align: right;" hidden)
       span.remove
         paper-button#remove(on-tap="remove" raised) 削除(DEBUG)
 
