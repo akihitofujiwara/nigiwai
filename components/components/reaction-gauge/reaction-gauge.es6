@@ -7,21 +7,16 @@ Polymer({
     "render(reactionCount, waveIncrement)"
   ],
 
-  setReactionCount(room) {
-    this.set("reactionCount", 0);
-    let _this = this
-    let ref = firebase.database().ref(`/rooms/${this.roomId}/`)
-    ref.on("value", function(snapshot) {
-      let { comments = {}, reactions = {} } = snapshot.val()
+  setReactionCount(room = {}) {
+    this.debounce("setReactionCount", ()=> {
+      let { comments = {}, reactions = {} } = room
       let commentsCount = Object.keys(comments).length;
       let agreementsCount = Object.values(comments).reduce( (pre, current, index, array) => {
         return (current.agreements && Object.keys(current.agreements).length || 0) + pre
       }, 0)
       let reactionsCount = Object.keys(reactions).length;
-      _this.set("reactionCount", commentsCount + agreementsCount + reactionsCount);
-    }, function (errorObject) {
-      console.log("The read failed: " + errorObject.code);
-    });
+      this.set("reactionCount", commentsCount + agreementsCount + reactionsCount);
+    }, 300)
   },
 
   render(reactionCount, waveIncrement) {
