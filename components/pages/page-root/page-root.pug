@@ -23,6 +23,9 @@ dom-module#page-root
       ul {
         height: 200px;
       }
+      .line-through {
+        text-decoration: line-through;
+      }
     template(is="dom-if" if="[[active]]" restamp)
       paper-header-panel
         paper-toolbar
@@ -34,7 +37,7 @@ dom-module#page-root
               user-block
             ul
               li: a(href="#/rooms") ルーム一覧
-              li: a(href="#/config") 設定
+              li: a.line-through 設定
   script(src="./page-root.js")
 
 
