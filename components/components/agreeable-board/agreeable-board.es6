@@ -7,6 +7,15 @@ Polymer({
       }
     },
   },
+  observers: [
+    "setComments(room.comments)",
+  ],
+  setComments(comments = {}) {
+    const {keys} = Object
+    this.set("comments", keys(comments).map(($key)=> {
+      return {...comments[$key], $key: $key}
+    }))
+  },
   sortComments(x, y) {
     return (y.createdAt || 0) - (x.createdAt || 0)
   },

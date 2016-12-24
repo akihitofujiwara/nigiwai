@@ -1,12 +1,11 @@
 Polymer({
   is: "page-room",
   observers: [
-    "setValues(room)",
+    "setRoom(roomId, rooms, rooms.*)",
     "refresh(roomId)"
   ],
-  setValues({comments, reactions}) {
-    comments && this.set("comments", Object.values(comments))
-    reactions && this.set("reactions", Object.values(reactions))
+  setRoom(roomId, rooms) {
+    this.set("room", {...rooms.find(({$key})=> $key == roomId)})
   },
   refresh(roomId) {
     this.set("refreshed", false)
@@ -20,7 +19,7 @@ Polymer({
   },
   onEditorClosed({detail: {canceled}}) {
     if (canceled) return
-    console.log(this.editedRoom)
-    this.set("room", this.editedRoom)
+    const {$: {firebase: {ref}}} = this
+    ref.child("name").set(this.editedRoom.name)
   },
 })

@@ -36,29 +36,28 @@ dom-module#page-room
         text-decoration: none;
         color: var(--default-primary-color);
       }
+    firebase-query#firebase(path="/rooms/[[room.$key]]")
     template(is="dom-if" if="[[active]]" restamp)
-      firebase-auth#firebaseAuth(user="{{user}}" provider="google")
-      firebase-document(path="/rooms/[[roomId]]" data="{{room}}")
       paper-drawer-panel(responsive-width="960px")
         div.layout.vertical(drawer)
           nigiwai-logo
           user-block
           a(href="#/rooms") < ルーム一覧
-          rooms-list(room-id="[[roomId]]")
+          rooms-list(rooms="[[rooms]]" room="[[room]]")
         paper-header-panel(main)
           paper-toolbar
             paper-icon-button(icon="menu" paper-drawer-toggle)
             .title.flex [[room.name]]
             paper-icon-button(icon="image:edit" on-tap="openEditor")
           .horizontal.layout.around-justified
-            template(is="dom-if" if="[[refreshed]]" restamp entry-animation="fade-in-animation" exit-animation="fade-out-animation")
+            template(is="dom-if" if="[[refreshed]]" restamp)
               .vertical.layout.flex
                 paper-card
                   .card-content
-                    agreeable-board(room-id="[[roomId]]")
+                    agreeable-board(user="[[user]]" users="[[users]]" room="[[room]]")
                 paper-card
                   .card-content
-                    nigi-yakashi(room-id="[[roomId]]" room="[[room]]")
+                    nigi-yakashi(user="[[user]]" room="[[room]]")
               paper-card
                 .card-content
                   reaction-gauge(room-id="[[roomId]]" room="[[room]]")

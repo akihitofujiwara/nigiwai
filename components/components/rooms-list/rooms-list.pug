@@ -13,7 +13,6 @@ dom-module#rooms-list
         text-decoration: none;
         color: #333;
       }
-    firebase-query(path="/rooms" data="{{rooms}}")
     paper-listbox(selected="{{roomId}}" attr-for-selected="id")
       template(is="dom-repeat" items="[[rooms]]")
         paper-item(id="[[item.$key]]")

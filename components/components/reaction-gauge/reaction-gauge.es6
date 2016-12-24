@@ -2,6 +2,12 @@ Polymer({
   is: "reaction-gauge",
   maxCount: 500,
 
+  properties: {
+    waveIncrement: {
+      value: true
+    }
+  },
+
   observers: [
     "setReactionCount(room)",
     "render(reactionCount, waveIncrement)"
@@ -37,11 +43,23 @@ Polymer({
         .attr({'fill-opacity': 0.0});
   },
 
-  attached(){
-    this.waveIncrement = true;
-    setInterval(()=>{
+  attached() {
+    this.wave()
+  },
+
+  detached() {
+    this.stopWave()
+  },
+
+  wave() {
+    this.set("waveId", this.async(()=> {
       this.set("waveIncrement", !this.waveIncrement)
-    }, 1250);
+      this.wave()
+    }, 1250))
+  },
+
+  stopWave() {
+    this.cancelAsync(this.waveId)
   },
 
   calY(count){

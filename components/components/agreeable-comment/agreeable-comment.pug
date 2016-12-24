@@ -36,9 +36,7 @@ dom-module#agreeable-comment
       .metoo-by user-icon {
         --user-icon-size: 20px;
       }
-    firebase-auth#firebaseAuth(user="{{user}}" provider="google")
-    firebase-query#firebase(path="/rooms/[[roomId]]/comments/[[comment.$key]]/agreements" data="{{agreements}}")
-    firebase-query(path="/users" data="{{users}}")
+    firebase-query#firebase(path="/rooms/[[room.$key]]/comments/[[comment.$key]]/agreements")
     .comment.layout.vertical.start
       .layout.horizontal.center
         .body [[comment.body]]

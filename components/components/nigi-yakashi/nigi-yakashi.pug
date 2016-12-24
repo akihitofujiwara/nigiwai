@@ -24,9 +24,7 @@ dom-module#nigi-yakashi
       .clap paper-button {
       }
     div(hidden)
-      firebase-auth#firebaseAuth(user="{{user}}" provider="google")
-      firebase-query#firebaseReactions(path="/rooms/[[roomId]]/reactions" data="{{reactions}}")
-      firebase-query(path="/users" data="{{users}}")
+      firebase-query#firebaseReactions(path="/rooms/[[room.$key]]/reactions")
     .clap
       paper-button#clap(on-tap="clap" raised) パチパチ
     .like

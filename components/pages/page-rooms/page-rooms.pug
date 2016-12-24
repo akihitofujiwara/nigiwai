@@ -44,8 +44,7 @@ dom-module#page-rooms
         text-decoration: none;
       }
     template(is="dom-if" if="[[active]]" restamp)
-      firebase-auth#firebaseAuth(user="{{user}}" provider="google")
-      firebase-query#firebaseRooms(path="/rooms" data="{{rooms}}")
+      firebase-query#firebaseRooms(path="/rooms")
       paper-drawer-panel(responsive-width="960px")
         div(drawer)
           .layout.vertical

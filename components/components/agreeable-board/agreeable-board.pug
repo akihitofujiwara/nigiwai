@@ -27,14 +27,12 @@ dom-module#agreeable-board
       .comment:nth-child(even) {
         background-color: #f5f5f5;
       }
-    firebase-auth#firebaseAuth(user="{{user}}" provider="google")
-    firebase-query#firebase(path="/rooms/[[roomId]]/comments" data="{{comments}}")
-    firebase-query(path="/users" data="{{users}}")
+    firebase-query#firebase(path="/rooms/[[room.$key]]/comments")
     form(is="iron-form" on-submit="submit")
       .layout.horizontal.center
         paper-input.flex(label="コメント" value="{{newComment.body}}")
         paper-button(raised on-tap="submit") submit
     .comments
       template(is="dom-repeat" items="[[comments]]" sort="sortComments")
-        .comment: agreeable-comment(comment="[[item]]" room-id="[[roomId]]")
+        .comment: agreeable-comment(comment="[[item]]" users="[[users]]" user="[[user]]" room="[[room]]")
   script(src="./agreeable-board.js")

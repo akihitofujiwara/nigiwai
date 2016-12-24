@@ -11,8 +11,6 @@ dom-module#reaction-gauge
         min-width: 200px;
         min-height: 400px;
       }
-    firebase-auth#firebaseAuth(user="{{user}}" provider="google")
-    firebase-query#firebaseReactions(path="/rooms/[[roomId]]/reactions" data="{{reactions}}")
     svg(viewbox='0 0 200 400')
       def
         g#gauge
