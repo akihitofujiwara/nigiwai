@@ -8,11 +8,11 @@ Polymer({
   ],
 
   setReactionCount(room) {
-    if (!(room && room.reactions)) return
+    this.set("reactionCount", 0);
     let _this = this
     let ref = firebase.database().ref(`/rooms/${this.roomId}/`)
     ref.on("value", function(snapshot) {
-      let { comments, reactions } = snapshot.val()
+      let { comments = {}, reactions = {} } = snapshot.val()
       let commentsCount = Object.keys(comments).length;
       let agreementsCount = Object.values(comments).reduce( (pre, current, index, array) => {
         return (current.agreements && Object.keys(current.agreements).length || 0) + pre
