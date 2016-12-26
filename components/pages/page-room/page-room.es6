@@ -5,7 +5,9 @@ Polymer({
     "refresh(roomId)"
   ],
   setRoom(roomId, rooms) {
-    this.set("room", {...rooms.find(({$key})=> $key == roomId)})
+    this.debounce("setRoom", ()=> {
+      this.set("room", {...rooms.find(({$key})=> $key == roomId)})
+    }, 300)
   },
   refresh(roomId) {
     this.set("refreshed", false)
