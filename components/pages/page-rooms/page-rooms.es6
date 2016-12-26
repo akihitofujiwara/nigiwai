@@ -15,8 +15,11 @@ class PageRooms {
   countReaction(x) {
     if (!(x && x.reactions && x.comments)) return
     var reactions = Object.values(x.reactions).length;
-    var comments = Object.values(x.comments).length; 
-    return reactions + comments
+    var comments = Object.values(x.comments).length;
+    var agreements = Object.values(x.comments).reduce( (pre, current, index, array) => {
+        return (current.agreements && Object.keys(current.agreements).length || 0) + pre;
+      }, 0)
+    return reactions + comments + agreements
   }
 }
 Polymer(PageRooms.prototype)
