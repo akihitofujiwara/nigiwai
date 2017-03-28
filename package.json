@@ -19,9 +19,11 @@
     "livescript": "^1.5.0",
     "prelude-ls": "^1.1.2",
     "run-sequence": "^1.2.2",
+    "vulcanize": "^1.15.4",
     "webpack": "^1.13.3"
   },
   "scripts": {
-    "dev": "gulp dev"
+    "dev": "gulp dev",
+    "build": "gulp build && $(yarn bin)/vulcanize index.html --out-html index.html --inline-scripts"
   }
 }
