@@ -24,9 +24,9 @@ Polymer({
   },
   attached(){
     const soundFiles = {
-      clap: "/files/sounds/clap.mp3",
-      laugh: "/files/sounds/laugh.mp3",
-      hee: "/files/sounds/hee.mp4",
+      clap: "./files/sounds/clap.mp3",
+      laugh: "./files/sounds/laugh.mp3",
+      hee: "./files/sounds/hee.mp4",
     };
     for(const key in soundFiles){
       this.sounds[key] = new Howl({src: soundFiles[key], volume: seVolume});
